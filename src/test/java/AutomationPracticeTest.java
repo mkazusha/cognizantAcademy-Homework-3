@@ -1,7 +1,7 @@
 import baseFunc.BaseFunc;
-import baseFunc.CartPage;
-import baseFunc.DressesPage;
-import baseFunc.HomePage;
+import webPages.CartPage;
+import webPages.DressesPage;
+import webPages.HomePage;
 import org.junit.jupiter.api.Test;
 
 public class AutomationPracticeTest {
@@ -17,21 +17,16 @@ public class AutomationPracticeTest {
     public void test() {
         baseFunc.openPage(URL);
         homePage = new HomePage(baseFunc);
-        dressesPage = homePage.pushDresses();
-        dressesPage.pushOrange();
+        homePage.pushTab("Dresses");
+        dressesPage = new DressesPage(baseFunc);
+        dressesPage.selectColor("Orange");
         orangeColor = dressesPage.getOrangeColor();
         dressesPage.checkFilteredItemsColor(dressesPage.getFilteredDresses(), dressesPage.getColorsOfFilteredDresses(), orangeColor);
         dressesPage.pushRandomDress(dressesPage.getFilteredDresses());
         dressesPage.checkSelectedColorOnQuickView(orangeColor);
         baseFunc.switchToMainFrame();
         dressesPage.closeItemQuickView();
-        for (int i = 0; i < 2; i++) {
-            dressesPage.pushRandomDress(dressesPage.getFilteredDresses());
-            price += dressesPage.getDressPrice();
-            dressesPage.pushAddToCart();
-            dressesPage.pushContinueShopping();
-            baseFunc.switchToMainFrame();
-        }
+        price = dressesPage.addRandomDressToCart(2);
         cartPage = dressesPage.pushCart();
         cartPage.checkCartPriceCalculation(price, cartPage.getTotalProductPrice());
         baseFunc.closeBrowser();
