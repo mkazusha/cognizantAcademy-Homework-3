@@ -12,7 +12,7 @@ Feature: orange dress test
     When we add 2 different dresses in the cart
     And we open cart
     Then products are calculated correctly
-    Then we close browser
+    And we close browser
 
   Scenario: Check price range slider filter
     Given we select "DRESSES" section
@@ -26,4 +26,4 @@ Feature: orange dress test
     And products are calculated correctly
     When we delete 1 dress
     Then products are calculated correctly
-    Then we close browser
+    And we close browser
